@@ -30,11 +30,6 @@ headers = {
 options = webdriver.FirefoxOptions()
 options.headless = True
 
-
-firefox_profile = webdriver.FirefoxProfile()
-firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
-options.page_load_strategy = 'none'
-
 # path web driver downloaded
 firefox_path = GeckoDriverManager().install()
 firefox_service = Service(firefox_path)
