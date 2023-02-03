@@ -23,7 +23,7 @@ headers = {
 
 
 options = webdriver.FirefoxOptions()
-options.add_argument('--headless')  
+options.headless = True
 
 
 firefox_profile = webdriver.FirefoxProfile()
