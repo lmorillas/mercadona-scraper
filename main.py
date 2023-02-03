@@ -17,17 +17,11 @@ from webdriver_manager.firefox import GeckoDriverManager
 logging.basicConfig(filename='logs/app.log', filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.DEBUG)
 logger = logging.getLogger()
 
+HOME_URL =  "https://tienda.mercadona.es/categories/"
 
 def get_urls():
-    # Request data
-    try:
-        cp = driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div/div[2]/div/form/div/input')
-        cp.send_keys('28039')
-        cp.submit()
-
-    except Exception as e:
-        logger.exception('Problem while inputing CP', exc_info=True)
-        
+    
+    driver.get(HOME_URL)
 
     category_urls = []
     category_list = driver.find_elements(By.CLASS_NAME, 'category-menu__item')
@@ -46,12 +40,15 @@ def get_urls():
     return category_urls
 
 def get_category_products(category_urls):
+
+    driver.get(HOME_URL)
     
     product_list = []
     # TIMESTAMP
     unixtime = time.time()
     timestamp = datetime.datetime.fromtimestamp(unixtime).date()
-    
+    num_urls = 1
+
     for url in category_urls:
 
         logger.debug(f"Currently scraping {url}")
@@ -138,7 +135,6 @@ def scrape_data():
 
 if __name__ == '__main__':
 
-    url = "https://tienda.mercadona.es/categories/"
 
     headers = {
         'Access-Control-Allow-Origin': '*',
@@ -166,8 +162,25 @@ if __name__ == '__main__':
     driver.implicitly_wait(3)
 
     # get url and wait
-    driver.get(url)
-    time.sleep(3)
+    driver.get(HOME_URL)
+    
+    # Request data
+    try:
+        cookie_button = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div/div/button[2]')
+        driver.execute_script('arguments[0].click()', cookie_button)
+    
+    except Exception as e:
+        logger.exception('Problem while accepting cookies', exc_info=True)
+
+    try: 
+        form = driver.find_element(By.CLASS_NAME, 'postal-code-checker')
+        input = form.find_element(By.XPATH, './div/input')
+        input.send_keys('28039')
+        submit_button = form.find_element(By.XPATH, './button')
+        driver.execute_script('arguments[0].click()', submit_button)
+
+    except Exception as e:
+        logger.exception('No se ha podido introducir CP', exc_info=True)
 
 
     # fetch urls
