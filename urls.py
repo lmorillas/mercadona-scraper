@@ -3,7 +3,7 @@ import logging
 
 from selenium import webdriver 
 from selenium.webdriver import Firefox 
-from selenium.webdriver.chrome.service import Service 
+from selenium.webdriver.firefox.service import Service 
 from selenium.webdriver.common.by import By 
 from webdriver_manager.firefox import GeckoDriverManager
 
@@ -23,7 +23,7 @@ headers = {
 
 
 options = webdriver.FirefoxOptions()
-options.headless = True
+options.add_argument('headless')
 
 
 # path web driver downloaded
