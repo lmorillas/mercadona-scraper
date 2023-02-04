@@ -3,11 +3,16 @@ import logging
 
 import sqlite3
 import pandas as pd
+import datetime
+import time 
+
+unixtime = time.time()
+timestamp = datetime.datetime.fromtimestamp(unixtime).date().strftime('%d-%m-%Y')
  
 from urls import get_urls
 from products import get_category_products
-
-logging.basicConfig(filename='logs/app.log', filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.DEBUG)
+h
+logging.basicConfig(filename=f'logs/{timestamp}.log', filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%m-%Y %H:%M:%S', level=logging.DEBUG)
 logger = logging.getLogger()
 
 HOME_URL =  "https://tienda.mercadona.es/categories/"

@@ -23,7 +23,7 @@ headers = {
 
 
 options = webdriver.FirefoxOptions()
-options.add_argument('headless')
+options.add_argument('--headless')
 
 
 # path web driver downloaded

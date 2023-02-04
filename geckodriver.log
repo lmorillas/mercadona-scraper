@@ -17,3 +17,30 @@ JavaScript error: chrome://remote/content/marionette/cert.js, line 55: NS_ERROR_
 
 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1675506504584	geckodriver	INFO	Listening on 127.0.0.1:38383
+1675506505087	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "headless" "--remote-debugging-port" "51333" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilepNSAbT"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1675506505784	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilepNSAbT/search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:51333/devtools/browser/ee5c9e75-4363-4e95-bfea-ac57bf395b18
+1675506507137	Marionette	INFO	Listening on port 41205
+Read port: 41205
+1675506507212	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1675506534106	geckodriver	INFO	Listening on 127.0.0.1:35445
+1675506534610	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--headless" "--remote-debugging-port" "39825" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile6tdlxq"
+*** You are running in headless mode.
+1675506535175	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile6tdlxq/search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:39825/devtools/browser/6c81d47e-bd5b-4ced-b3c0-2aa280fd8107
+1675506536545	Marionette	INFO	Listening on port 35803
+Read port: 35803
+1675506536629	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1675506558427	Marionette	INFO	Stopped listening on port 41205
+JavaScript error: chrome://remote/content/marionette/cert.js, line 55: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
