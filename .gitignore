@@ -1,4 +1,6 @@
 __pycache__
 logs
+scraped
 venv
 *.db
+*.txt

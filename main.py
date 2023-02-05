@@ -1,5 +1,7 @@
-import logging
+#!/usr/bin/python3
 
+import logging
+import os
 
 import sqlite3
 import pandas as pd
@@ -11,7 +13,7 @@ timestamp = datetime.datetime.fromtimestamp(unixtime).date().strftime('%d-%m-%Y'
  
 from urls import get_urls
 from products import get_category_products
-h
+
 logging.basicConfig(filename=f'logs/{timestamp}.log', filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%m-%Y %H:%M:%S', level=logging.DEBUG)
 logger = logging.getLogger()
 
@@ -21,7 +23,9 @@ HOME_URL =  "https://tienda.mercadona.es/categories/"
 
 def save_data(product_data):
 
-    connection = sqlite3.connect('data.db')
+    current = os.getcwd()
+    db_dir = os.path.join(current, 'data.db')
+    connection = sqlite3.connect(db_dir)
     
     try: 
         df = pd.DataFrame(product_data)
@@ -49,3 +53,5 @@ if __name__ == '__main__':
 
     # save data to csv
     save_data(product_data)
+
+

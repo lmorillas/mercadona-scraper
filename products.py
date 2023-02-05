@@ -1,4 +1,7 @@
+#!/usr/bin/python3
+
 import logging
+from os.path import devnull
 
 
 import time 
@@ -32,7 +35,7 @@ options.add_argument('--headless')
 
 # path web driver downloaded
 firefox_path = GeckoDriverManager().install()
-firefox_service = Service(firefox_path)
+firefox_service = Service(firefox_path, log_path=devnull)
 
 # defined options
 driver = Firefox(options=options, service=firefox_service)
