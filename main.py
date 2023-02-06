@@ -20,7 +20,6 @@ logger = logging.getLogger()
 HOME_URL =  "https://tienda.mercadona.es/categories/"
 
 
-
 def save_data(product_data):
 
     current = os.getcwd()

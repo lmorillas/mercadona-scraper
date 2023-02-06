@@ -48,6 +48,7 @@ driver.get(HOME_URL)
 def get_category_products(category_urls):
 
     product_list = []
+    scraped = ''
     # TIMESTAMP
     unixtime = time.time()
     timestamp = datetime.datetime.fromtimestamp(unixtime).date()
@@ -105,7 +106,7 @@ def get_category_products(category_urls):
                     'timestamp' : timestamp,
                 }
 
-                print(f'{name} | CATEGORIA : {category} | PRECIO : {price} €')
+                scraped += f'{name} | CATEGORIA : {category} | PRECIO : {price} €\n'
                 
                 product_list.append(product_item)
             
@@ -115,5 +116,8 @@ def get_category_products(category_urls):
             except NoSuchElementException:
                 existSubcategory = False
 
-    logger.info(f'Scraped {len(product_list)} products from {num_urls} urls', )
+    with open(f'scraped/{timestamp}.txt', 'w') as f:
+        f.write(scraped)
+
+    logger.info(f'Scraped {len(product_list)} products from {num_urls} urls')
     return product_list
