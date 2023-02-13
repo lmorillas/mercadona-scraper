@@ -98,4 +98,7 @@ if __name__ == '__main__':
     # save data to csv
     save_data(product_data)
 
+    driver.close()
+    driver.quit()
+
 
