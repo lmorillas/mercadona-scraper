@@ -11,6 +11,7 @@ import time
 
 from selenium import webdriver 
 from selenium.webdriver import Firefox 
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service 
 from webdriver_manager.firefox import GeckoDriverManager
 
@@ -63,24 +64,21 @@ if __name__ == '__main__':
     }
 
 
-    options = webdriver.FirefoxOptions()
-    options.add_argument('--headless')
+    firefox_options = webdriver.FirefoxOptions()
+    firefox_options.add_argument('--headless')
+    firefox_options.set_preference("browser.cache.disk.enable", False)
+    firefox_options.set_preference("browser.cache.memory.enable", False)
+    firefox_options.set_preference("browser.cache.offline.enable", False)
+    firefox_options.set_preference("network.http.use-cache", False)
+    firefox_options.set_preference("browser.privatebrowsing.autostart", True)
+
 
     # firefox service
     firefox_path = GeckoDriverManager().install()
     firefox_service = Service(firefox_path, log_path=os.path.devnull)
 
-    # firefox profile
-
-    firefox_profile = webdriver.FirefoxProfile()
-    firefox_profile.set_preference("browser.cache.disk.enable", False)
-    firefox_profile.set_preference("browser.cache.memory.enable", False)
-    firefox_profile.set_preference("browser.cache.offline.enable", False)
-    firefox_profile.set_preference("network.http.use-cache", False)
-    firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
-
     # defined options
-    driver = Firefox(options=options, service=firefox_service, firefox_profile=firefox_profile)
+    driver = Firefox(options=firefox_options, service=firefox_service)
     driver.implicitly_wait(3)
 
     # get url and wait
