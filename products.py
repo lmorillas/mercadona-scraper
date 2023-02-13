@@ -7,45 +7,14 @@ from os.path import devnull
 import time 
 import datetime
 
-
 from selenium.common.exceptions import NoSuchElementException
-from selenium import webdriver 
-from selenium.webdriver import Firefox 
-from selenium.webdriver.firefox.service import Service 
 from selenium.webdriver.common.by import By 
-from webdriver_manager.firefox import GeckoDriverManager
 
 logger = logging.getLogger()
 
 
-HOME_URL =  "https://tienda.mercadona.es/categories/"
 
-
-headers = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Max-Age': '3600',
-        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
-    }
-
-
-options = webdriver.FirefoxOptions()
-options.add_argument('--headless')
-
-# path web driver downloaded
-firefox_path = GeckoDriverManager().install()
-firefox_service = Service(firefox_path, log_path=devnull)
-
-# defined options
-driver = Firefox(options=options, service=firefox_service)
-driver.implicitly_wait(3)
-
-# get url and wait
-driver.get(HOME_URL)
-
-
-def get_category_products(category_urls):
+def get_category_products(driver, category_urls):
 
     product_list = []
     scraped = ''
