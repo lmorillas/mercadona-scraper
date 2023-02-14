@@ -43,11 +43,7 @@ def save_data(product_data):
     except Exception as e:
         logger.exception('Problem while saving data to database')
 
-def scrape_data():
-    category_urls = get_urls()
-    product_data = get_category_products(category_urls)
-    save_data(product_data)
-
+    connection.close()
 
 if __name__ == '__main__':
 
