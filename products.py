@@ -23,12 +23,15 @@ def get_category_products(driver, category_urls):
     timestamp = datetime.datetime.fromtimestamp(unixtime).date()
     num_urls = 1
 
+    # TODO : arreflar guantes
+    guante_counter = 0
+
     for url in category_urls:
 
         logger.debug(f"Currently scraping {url}")
         driver.get(url)
         time.sleep(2)
-     
+
         existSubcategory = True
         num_urls = 1
         while existSubcategory:
@@ -67,6 +70,20 @@ def get_category_products(driver, category_urls):
                     logger.error("Price not found")
                     logger.exception(e)
 
+                # TODO : find better solution for this
+                # BOSQUE-VERDE condition
+
+                guantes = ['guantes de látex bosque verde talla pequeña', 'guantes de látex bosque verde talla mediana', 'guantes de látex bosque verde talla grande']
+                
+                if name.lower() in guantes:
+                    if guante_counter > 2:
+
+                        name += ' (revestidos)'
+
+                    else: 
+                        name += ' (sensibles)'
+                        guante_counter += 1
+
                 product_item = {
                     'name' : name,
                     'category' : category,
@@ -78,6 +95,7 @@ def get_category_products(driver, category_urls):
                 scraped += f'{name} | CATEGORIA : {category} | PRECIO : {price} €\n'
                 
                 product_list.append(product_item)
+                              
             
             try:
                 driver.execute_script('arguments[0].click()', driver.find_element(By.CLASS_NAME, 'category-detail__next-subcategory'))
