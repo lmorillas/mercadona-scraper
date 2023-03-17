@@ -3,7 +3,6 @@ logs
 scraped
 venv
 *.db
-*.txt
 env
 *.pyc
 *.pyo
