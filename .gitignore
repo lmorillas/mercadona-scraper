@@ -4,3 +4,8 @@ scraped
 venv
 *.db
 *.txt
+env
+*.pyc
+*.pyo
+*.pyd
+

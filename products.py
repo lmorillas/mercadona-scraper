@@ -30,7 +30,7 @@ def get_category_products(driver, category_urls):
 
         logger.debug(f"Currently scraping {url}")
         driver.get(url)
-        time.sleep(2)
+        time.sleep(1)
 
         existSubcategory = True
         num_urls = 1
@@ -70,6 +70,16 @@ def get_category_products(driver, category_urls):
                     logger.error("Price not found")
                     logger.exception(e)
 
+                #IMG
+                try: 
+                    img = product.find_element(By.XPATH, './/img').get_attribute('src')
+                    
+                except Exception as e:
+                    img = ''
+                    logger.error("No imagen")
+                    logger.exception(e)
+
+
                 # TODO : find better solution for this
                 # BOSQUE-VERDE condition
 
@@ -90,18 +100,21 @@ def get_category_products(driver, category_urls):
                     'format' : format,
                     'price' : price,
                     'timestamp' : timestamp,
+                    'img' : img,
                 }
 
-                scraped += f'{name} | CATEGORIA : {category} | PRECIO : {price} €\n'
+                scraped += f'{name} | CATEGORIA : {category} | PRECIO : {price} € | IMG : {img}\n'
                 
                 product_list.append(product_item)
                               
             
             try:
                 driver.execute_script('arguments[0].click()', driver.find_element(By.CLASS_NAME, 'category-detail__next-subcategory'))
-                time.sleep(2)
+                time.sleep(1)
             except NoSuchElementException:
                 existSubcategory = False
+
+            
 
     with open(f'scraped/{timestamp}.txt', 'w') as f:
         f.write(scraped)

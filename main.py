@@ -6,7 +6,6 @@ import os
 import sqlite3
 import pandas as pd
 import datetime
-import time 
 
 
 from selenium import webdriver 
@@ -14,14 +13,19 @@ from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service 
 from webdriver_manager.firefox import GeckoDriverManager
+from pathlib import Path
 
 from urls import get_urls
 from products import get_category_products
+import json
 
 
-unixtime = time.time()
-timestamp = datetime.datetime.fromtimestamp(unixtime).date().strftime('%d-%m-%Y')
- 
+timestamp = datetime.date.today().strftime('%d-%m-%Y')
+
+# paths
+Path('./logs').mkdir(exist_ok=True)
+Path('./scraped').mkdir(exist_ok=True)
+
 
 logging.basicConfig(filename=f'logs/{timestamp}.log', filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%m-%Y %H:%M:%S', level=logging.DEBUG)
 logger = logging.getLogger()
@@ -30,7 +34,6 @@ HOME_URL =  "https://tienda.mercadona.es/categories/"
 
 
 def save_data(product_data):
-
     current = os.getcwd()
     db_dir = os.path.join(current, 'data.db')
     connection = sqlite3.connect(db_dir)
@@ -47,9 +50,7 @@ def save_data(product_data):
 
 if __name__ == '__main__':
 
-    
     HOME_URL =  "https://tienda.mercadona.es/categories/"
-
 
     headers = {
         'Access-Control-Allow-Origin': '*',
@@ -75,7 +76,7 @@ if __name__ == '__main__':
 
     # defined options
     driver = Firefox(options=firefox_options, service=firefox_service)
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(2)
 
     # get url and wait
     driver.get(HOME_URL)
@@ -87,10 +88,13 @@ if __name__ == '__main__':
     # LOG DATA FOR URLS
     
     # fetch product data
+
     product_data = get_category_products(driver, category_urls)
 
     # save data to csv
     save_data(product_data)
+
+    json.dump(product_data, open(f'scraped/productos-{timestamp}.json', 'w'))
 
     driver.close()
     driver.quit()
